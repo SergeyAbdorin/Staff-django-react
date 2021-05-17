@@ -1,11 +1,8 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 
 
 from .serializers import (
     DepartmentSerializer,
-    EmployeeSerializer,
-    EmployeeListRetrieveSerializer,
     DepartmentDetailSerializer,
     EmployeeListSerializer
 )
@@ -19,22 +16,6 @@ class DepartmentViewSet(viewsets.ModelViewSet):
 
     action_to_serializer = {
         "retrieve": DepartmentDetailSerializer
-    }
-
-    def get_serializer_class(self):
-        return self.action_to_serializer.get(
-            self.action,
-            self.serializer_class
-        )
-
-
-class EmployeeViewSet(viewsets.ModelViewSet):
-    queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
-
-    action_to_serializer = {
-        "list": EmployeeListRetrieveSerializer,
-        "retrieve": EmployeeListRetrieveSerializer
     }
 
     def get_serializer_class(self):

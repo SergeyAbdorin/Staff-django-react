@@ -30,15 +30,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EmployeeListRetrieveSerializer(serializers.ModelSerializer):
-
-    department = DepartmentSerializer()
-
-    class Meta:
-        model = Employee
-        fields = '__all__'
-
-
 class EmployeeListSerializer(serializers.ModelSerializer):
 
 
