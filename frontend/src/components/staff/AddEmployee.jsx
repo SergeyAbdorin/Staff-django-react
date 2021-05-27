@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useHistory } from 'react-router';
 import axios from 'axios';
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
 
 
 
@@ -16,6 +19,17 @@ function AddEmployee() {
     const [ department, setDepartment ] = useState("")
     const [ phone_number, setPhone_number ] = useState("")
     const [ email, setEmail ] = useState("")
+
+    const [ departments, setDepartments ] = useState([])
+
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: 'http://127.0.0.1:8000/api/department/'
+        }).then(response => {
+            setDepartments(response.data)
+        })
+    }, [])
 
     const history = useHistory();
 
@@ -41,12 +55,14 @@ function AddEmployee() {
         await axios({
             method: "post",
             url: 'http://127.0.0.1:8000/api/employee/',
-            data: formfield
-        }).then((response) => {
+            data: formfield,
+        }).then(response => {
             console.log(response.data)
             history.push('/employee/')
-        })
+        }).catch(error => {
+            console.log(error.response)})
         }
+
 
     return (
         <div className="container">
@@ -68,7 +84,7 @@ function AddEmployee() {
               </div>
               <div className="col-md-6">
                 <label for="validationServer03" className="form-label">Дата рождения</label>
-                <input type="date" className="form-control is-invalid" id="validationServer03"
+                <input type="date" className="form-control is-valid" id="validationServer03"
                     name="birthday" value={birthday} onChange={(e) => setBirthday(e.target.value)} />
               </div>
               <div className="col-md-4">
@@ -79,12 +95,16 @@ function AddEmployee() {
               <div className="mb-3">
                  <label for="validationServer02" className="form-label">Отдел</label>
                  <select className="form-control is-valid" id="validationServer02"
-                    name="department" value={department} onChange={(e) => setDepartment(e.target.value)}>
-                        <option value="">Выберите отдел</option>
-                        <option value="Администрация">Администрация</option>
-                        <option value="Дизайнеры">Дизайнеры</option>
-                        <option value="Разработчики">Разработчики</option>
-                 </select>
+                    name="department"
+                    value={department}
+                    onChange={(e) => setDepartment(e.target.value)}
+                    >
+                        {departments.map(d =>(
+                            <option>
+                                {d.title}
+                            </option>
+                        ))}
+                    </select>
               </div>
               <div className="col-md-4">
                 <label for="validationServer02" className="form-label">Номер телефона</label>

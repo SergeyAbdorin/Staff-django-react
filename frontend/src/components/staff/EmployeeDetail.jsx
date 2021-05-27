@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory  } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
 
 
 function EmployeeDetail({ match }) {

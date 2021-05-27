@@ -15,8 +15,8 @@ function App() {
         <Router>
             <NavBar />
             <Switch>
-                <Route path="/employee/" exact component={EmployeeList} />
-                <Route path="/department/" exact component={DepartmentList} />
+                <Route path="/employee" exact component={EmployeeList} />
+                <Route path="/department" exact component={DepartmentList} />
                 <Route path="/employee/AddEmployee" exact component={AddEmployee} />
                 <Route path="/employee/:id" exact component={EmployeeDetail} />
                 <Route path="/department/:id" exact component={DepartmentDetail} />
