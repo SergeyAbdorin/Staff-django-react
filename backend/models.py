@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 
 class Department(models.Model):
 
-    title = models.CharField(max_length=100, verbose_name="Наименование отдела")
+    title = models.CharField(max_length=100, verbose_name="Наименование отдела", null=False, blank=False)
     #slug = models.SlugField(unique=True)
 
     # Визуальное отображение модели
